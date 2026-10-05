@@ -22,6 +22,7 @@
   color-scheme:dark;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
 a{color:var(--accent-soft)}
@@ -52,6 +53,7 @@ p{margin:0}
 .hdr .btn{padding:11px 20px;font-size:14px}
 .menu-btn{display:none;background:none;border:1px solid var(--line-2);border-radius:10px;width:44px;height:44px;color:var(--fg);cursor:pointer;align-items:center;justify-content:center}
 .mnav{border-top:1px solid var(--line);padding:8px 24px 18px;display:flex;flex-direction:column}
+@media (min-width:981px){.mnav{display:none!important}}
 .mnav a{color:var(--fg);text-decoration:none;padding:12px 0;border-bottom:1px solid var(--line)}
 
 /* Hero */
