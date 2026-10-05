@@ -227,8 +227,7 @@ footer{border-top:1px solid var(--line);background:var(--bg-3)}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .am-pulse,.am-float,.am-flow,.orbit,.node .ping,.pin,.core,.sweep{animation:none}
-  .packets{display:none}
+  .am-float{animation:none}
   .btn,.card,.wa-float{transition:none}
 }
 </style>
@@ -561,8 +560,7 @@ footer{border-top:1px solid var(--line);background:var(--bg-3)}
   // Hero: parallax con el mouse y pausa si se prefiere menos movimiento
   var art=document.getElementById('heroArt'), hsvg=document.getElementById('heroSvg');
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduce && hsvg && hsvg.pauseAnimations){ hsvg.pauseAnimations(); }
-  if(art && !reduce && window.matchMedia('(pointer:fine)').matches){
+    if(art && !reduce && window.matchMedia('(pointer:fine)').matches){
     var back=art.querySelector('.layer-back'), nodes=art.querySelector('.layer-nodes'), chip=art.querySelector('.layer-chip');
     var hero=document.querySelector('.hero');
     hero.addEventListener('pointermove',function(e){
