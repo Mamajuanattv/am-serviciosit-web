@@ -78,6 +78,28 @@ p{margin:0}
 .am-pulse{animation:pulse 3.2s ease-in-out infinite}
 .am-float{animation:floaty 6s ease-in-out infinite}
 .am-flow{stroke-dasharray:6 8;animation:dash 2.4s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes ping{0%{transform:scale(1);opacity:.55}80%,100%{transform:scale(1.55);opacity:0}}
+@keyframes pinGlow{0%,70%,100%{stroke:#4f93f5}80%{stroke:#cfe0ff}}
+@keyframes sweep{0%,55%{transform:translateX(0)}85%,100%{transform:translateX(190px)}}
+@keyframes corePulse{0%,100%{fill:#2a32a8}50%{fill:#3540c4}}
+.hero-art svg{overflow:visible}
+.orbit{transform-box:view-box;transform-origin:260px 220px;animation:spin 60s linear infinite}
+.orbit-rev{animation-duration:22s;animation-direction:reverse}
+.pkt{fill:#bfe0ff}
+.node{cursor:pointer;outline:none}
+.node .ring{fill:#0b1427;stroke:#4f93f5;stroke-width:2;transition:stroke .2s,fill .2s}
+.node .ico{stroke:#bcd6ff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:stroke .2s}
+.node .ping{fill:none;stroke:#7fb2ff;stroke-width:1.5;transform-box:fill-box;transform-origin:center;animation:ping 3.6s ease-out infinite;animation-delay:var(--d)}
+.node .nlabel{fill:#dbe8ff;font:600 11px var(--f-body);letter-spacing:.04em;opacity:0;transition:opacity .2s;pointer-events:none}
+.node:hover .ring,.node:focus-visible .ring{stroke:#cfe0ff;fill:#13254a}
+.node:hover .ico,.node:focus-visible .ico{stroke:#ffffff}
+.node:hover .nlabel,.node:focus-visible .nlabel{opacity:1}
+.pin{animation:pinGlow 2.4s ease-in-out infinite;animation-delay:var(--p)}
+.core{animation:corePulse 3.2s ease-in-out infinite}
+.sweep{animation:sweep 4.5s ease-in-out infinite}
+.layer-nodes,.layer-chip,.layer-back{transition:transform .25s ease-out}
+
 
 .stats{border-top:1px solid var(--line);background:rgba(9,17,33,.88)}
 .stats .wrap{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;padding-block:30px}
@@ -205,7 +227,8 @@ footer{border-top:1px solid var(--line);background:var(--bg-3)}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .am-pulse,.am-float,.am-flow{animation:none}
+  .am-pulse,.am-float,.am-flow,.orbit,.node .ping,.pin,.core,.sweep{animation:none}
+  .packets{display:none}
   .btn,.card,.wa-float{transition:none}
 }
 </style>
@@ -246,31 +269,75 @@ footer{border-top:1px solid var(--line);background:var(--bg-3)}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
     </div>
-    <div class="hero-art am-float">
-      <svg viewBox="0 0 520 440" fill="none" role="img" aria-label="Chip de AM Servicios IT conectado a nube, servidores, seguridad y equipos">
-        <defs><radialGradient id="g1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#4f93f5" stop-opacity=".55"/><stop offset="100%" stop-color="#4f93f5" stop-opacity="0"/></radialGradient></defs>
+    <div class="hero-art am-float" id="heroArt">
+      <svg id="heroSvg" viewBox="0 0 520 440" fill="none" role="img" aria-label="Chip de AM Servicios IT conectado a nube, servidores, seguridad, redes y sistemas">
+        <defs>
+          <radialGradient id="g1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#4f93f5" stop-opacity=".55"/><stop offset="100%" stop-color="#4f93f5" stop-opacity="0"/></radialGradient>
+          <linearGradient id="sweep" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".38"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+          <clipPath id="coreClip"><rect x="222" y="182" width="76" height="76" rx="12"/></clipPath>
+          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
         <circle cx="260" cy="220" r="170" fill="url(#g1)" class="am-pulse"/>
-        <circle cx="260" cy="220" r="150" stroke="#4f93f5" stroke-opacity=".18" stroke-dasharray="3 7"/>
-        <path class="am-flow" d="M260 160V88M260 280v72M200 220H102M320 220h98M215 175l-75-65M305 175l75-65M215 265l-75 65M305 265l75 65" stroke="#4f93f5" stroke-width="2"/>
-        <rect x="200" y="160" width="120" height="120" rx="22" fill="#0d1a33" stroke="#4f93f5" stroke-width="2"/>
-        <rect x="222" y="182" width="76" height="76" rx="12" fill="#2a32a8"/>
-        <text x="260" y="231" text-anchor="middle" font-family="Sora, sans-serif" font-weight="800" font-size="28" fill="#fff">AM</text>
-        <path d="M230 160v-10M250 160v-10M270 160v-10M290 160v-10M230 280v10M250 280v10M270 280v10M290 280v10M200 190h-10M200 210h-10M200 230h-10M200 250h-10M320 190h10M320 210h10M320 230h10M320 250h10" stroke="#4f93f5" stroke-width="2" stroke-linecap="round"/>
-        <g fill="#0b1427" stroke="#4f93f5" stroke-width="2">
-          <circle cx="260" cy="56" r="32"/><circle cx="260" cy="384" r="32"/><circle cx="70" cy="220" r="32"/><circle cx="450" cy="220" r="32"/>
-          <circle cx="120" cy="88" r="26"/><circle cx="400" cy="88" r="26"/><circle cx="120" cy="352" r="26"/><circle cx="400" cy="352" r="26"/>
+        <g class="layer-back">
+          <circle class="orbit" cx="260" cy="220" r="150" stroke="#4f93f5" stroke-opacity=".22" stroke-dasharray="3 7"/>
+          <circle class="orbit orbit-rev" cx="260" cy="220" r="118" stroke="#7fb2ff" stroke-opacity=".55" stroke-width="2" stroke-linecap="round" stroke-dasharray="26 120 8 90 40 200"/>
         </g>
-        <g stroke="#bcd6ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M248 66a10 10 0 0 1 2-19 12 12 0 0 1 22 4 8 8 0 0 1 0 15z"/>
-          <rect x="246" y="372" width="28" height="9" rx="2"/><rect x="246" y="386" width="28" height="9" rx="2"/>
-          <path d="M70 204l12 5v9c0 8-6 12-12 14-6-2-12-6-12-14v-9z"/>
-          <rect x="436" y="208" width="28" height="18" rx="2"/><path d="M432 232h36"/>
-          <path d="M108 92a17 17 0 0 1 24 0M112 97a11 11 0 0 1 16 0"/>
-          <path d="M390 98V84M398 98V78M406 98V88M412 98V82"/>
-          <circle cx="120" cy="352" r="6"/><path d="M120 340v4M120 360v4M108 352h4M128 352h4"/>
-          <path d="M390 344h20v16h-20zM395 344v16M390 352h20"/>
+        <g class="layer-nodes">
+          <g class="links am-flow" stroke="#4f93f5" stroke-width="2">
+            <path id="l0" d="M260 150V88"/><path id="l1" d="M260 290V352"/><path id="l2" d="M190 220H102"/><path id="l3" d="M330 220H418"/><path id="l4" d="M208 171L139 106"/><path id="l5" d="M312 171L381 106"/><path id="l6" d="M208 269L139 334"/><path id="l7" d="M312 269L381 334"/>
+          </g>
+          <g class="packets" filter="url(#glow)">
+            <circle r="3.2" class="pkt"><animateMotion dur="2.6s" begin="0.0s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#l0"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.15;.8;1" dur="2.6s" begin="0.0s" repeatCount="indefinite"/></circle><circle r="3.2" class="pkt"><animateMotion dur="2.6s" begin="1.3s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#l0"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.15;.8;1" dur="2.6s" begin="1.3s" repeatCount="indefinite"/></circle><circle r="3.2" class="pkt"><animateMotion dur="2.95s" begin="0.45s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#l1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.15;.8;1" dur="2.95s" begin="0.45s" repeatCount="indefinite"/></circle><circle r="3.2" class="pkt"><animateMotion dur="2.95s" begin="1.93s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#l1"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.15;.8;1" dur="2.95s" begin="1.93s" repeatCount="indefinite"/></circle><circle r="3.2" class="pkt"><animateMotion dur="3.3s" begin="0.9s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#l2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.15;.8;1" dur="3.3s" begin="0.9s" repeatCount="indefinite"/></circle><circle r="3.2" class="pkt"><animateMotion dur="3.3s" begin="2.55s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#l2"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.15;.8;1" dur="3.3s" begin="2.55s" repeatCount="indefinite"/></circle><circle r="3.2" class="pkt"><animateMotion dur="3.65s" begin="1.35s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#l3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.15;.8;1" dur="3.65s" begin="1.35s" repeatCount="indefinite"/></circle><circle r="3.2" class="pkt"><animateMotion dur="3.65s" begin="3.17s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#l3"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.15;.8;1" dur="3.65s" begin="3.17s" repeatCount="indefinite"/></circle><circle r="3.2" class="pkt"><animateMotion dur="2.6s" begin="1.8s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#l4"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.15;.8;1" dur="2.6s" begin="1.8s" repeatCount="indefinite"/></circle><circle r="3.2" class="pkt"><animateMotion dur="2.6s" begin="3.1s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#l4"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.15;.8;1" dur="2.6s" begin="3.1s" repeatCount="indefinite"/></circle><circle r="3.2" class="pkt"><animateMotion dur="2.95s" begin="2.25s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#l5"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.15;.8;1" dur="2.95s" begin="2.25s" repeatCount="indefinite"/></circle><circle r="3.2" class="pkt"><animateMotion dur="2.95s" begin="3.73s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#l5"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.15;.8;1" dur="2.95s" begin="3.73s" repeatCount="indefinite"/></circle><circle r="3.2" class="pkt"><animateMotion dur="3.3s" begin="2.7s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#l6"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.15;.8;1" dur="3.3s" begin="2.7s" repeatCount="indefinite"/></circle><circle r="3.2" class="pkt"><animateMotion dur="3.3s" begin="4.35s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#l6"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.15;.8;1" dur="3.3s" begin="4.35s" repeatCount="indefinite"/></circle><circle r="3.2" class="pkt"><animateMotion dur="3.65s" begin="3.15s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#l7"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.15;.8;1" dur="3.65s" begin="3.15s" repeatCount="indefinite"/></circle><circle r="3.2" class="pkt"><animateMotion dur="3.65s" begin="4.97s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#l7"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.15;.8;1" dur="3.65s" begin="4.97s" repeatCount="indefinite"/></circle>
+          </g>
+          <a class="node" href="#servicios" style="--d:0.0s" aria-label="Nube y Microsoft 365">
+          <circle class="ping" cx="260" cy="56" r="32"/>
+          <circle class="ring" cx="260" cy="56" r="32"/>
+          <g class="ico"><path d="M248 66a10 10 0 0 1 2-19 12 12 0 0 1 22 4 8 8 0 0 1 0 15z"/></g>
+          <text class="nlabel" x="260" y="14" text-anchor="middle">Nube y Microsoft 365</text>
+        </a><a class="node" href="#servicios" style="--d:0.4s" aria-label="Servidores">
+          <circle class="ping" cx="260" cy="384" r="32"/>
+          <circle class="ring" cx="260" cy="384" r="32"/>
+          <g class="ico"><rect x="246" y="372" width="28" height="9" rx="2"/><rect x="246" y="386" width="28" height="9" rx="2"/></g>
+          <text class="nlabel" x="260" y="434" text-anchor="middle">Servidores</text>
+        </a><a class="node" href="#servicios" style="--d:0.8s" aria-label="Ciberseguridad">
+          <circle class="ping" cx="70" cy="220" r="32"/>
+          <circle class="ring" cx="70" cy="220" r="32"/>
+          <g class="ico"><path d="M70 204l12 5v9c0 8-6 12-12 14-6-2-12-6-12-14v-9z"/></g>
+          <text class="nlabel" x="70" y="270" text-anchor="middle">Ciberseguridad</text>
+        </a><a class="node" href="#servicios" style="--d:1.2000000000000002s" aria-label="Soporte técnico">
+          <circle class="ping" cx="450" cy="220" r="32"/>
+          <circle class="ring" cx="450" cy="220" r="32"/>
+          <g class="ico"><rect x="436" y="208" width="28" height="18" rx="2"/><path d="M432 232h36"/></g>
+          <text class="nlabel" x="450" y="270" text-anchor="middle">Soporte técnico</text>
+        </a><a class="node" href="#servicios" style="--d:1.6s" aria-label="Redes y WiFi">
+          <circle class="ping" cx="120" cy="88" r="26"/>
+          <circle class="ring" cx="120" cy="88" r="26"/>
+          <g class="ico"><path d="M108 92a17 17 0 0 1 24 0M112 97a11 11 0 0 1 16 0"/><circle cx="120" cy="101" r="1.2" fill="#bcd6ff"/></g>
+          <text class="nlabel" x="120" y="52" text-anchor="middle">Redes y WiFi</text>
+        </a><a class="node" href="#sap" style="--d:2.0s" aria-label="Reportería SAP">
+          <circle class="ping" cx="400" cy="88" r="26"/>
+          <circle class="ring" cx="400" cy="88" r="26"/>
+          <g class="ico"><path d="M390 98V84M398 98V78M406 98V88M412 98V82"/></g>
+          <text class="nlabel" x="400" y="52" text-anchor="middle">Reportería SAP</text>
+        </a><a class="node" href="#servicios" style="--d:2.4000000000000004s" aria-label="Mantenimiento">
+          <circle class="ping" cx="120" cy="352" r="26"/>
+          <circle class="ring" cx="120" cy="352" r="26"/>
+          <g class="ico"><circle cx="120" cy="352" r="6"/><path d="M120 340v4M120 360v4M108 352h4M128 352h4"/></g>
+          <text class="nlabel" x="120" y="396" text-anchor="middle">Mantenimiento</text>
+        </a><a class="node" href="#sap" style="--d:2.8000000000000003s" aria-label="Sistemas y ERP">
+          <circle class="ping" cx="400" cy="352" r="26"/>
+          <circle class="ring" cx="400" cy="352" r="26"/>
+          <g class="ico"><path d="M390 344h20v16h-20zM395 344v16M390 352h20"/></g>
+          <text class="nlabel" x="400" y="396" text-anchor="middle">Sistemas y ERP</text>
+        </a>
         </g>
-        <g fill="#7fb2ff"><circle cx="260" cy="124" r="3" class="am-pulse"/><circle cx="146" cy="220" r="3" class="am-pulse"/><circle cx="374" cy="220" r="3" class="am-pulse"/></g>
+        <g class="layer-chip">
+          <rect class="chip-body" x="200" y="160" width="120" height="120" rx="22" fill="#0d1a33" stroke="#4f93f5" stroke-width="2"/>
+          <g stroke="#4f93f5" stroke-width="2" stroke-linecap="round"><path class="pin" style="--p:0.0s" d="M230 160v-10"/><path class="pin" style="--p:0.9s" d="M230 280v10"/><path class="pin" style="--p:0.18s" d="M250 160v-10"/><path class="pin" style="--p:1.08s" d="M250 280v10"/><path class="pin" style="--p:0.36s" d="M270 160v-10"/><path class="pin" style="--p:1.26s" d="M270 280v10"/><path class="pin" style="--p:0.54s" d="M290 160v-10"/><path class="pin" style="--p:1.44s" d="M290 280v10"/><path class="pin" style="--p:0.45s" d="M200 190h-10"/><path class="pin" style="--p:1.35s" d="M320 190h10"/><path class="pin" style="--p:0.63s" d="M200 210h-10"/><path class="pin" style="--p:1.53s" d="M320 210h10"/><path class="pin" style="--p:0.81s" d="M200 230h-10"/><path class="pin" style="--p:1.71s" d="M320 230h10"/><path class="pin" style="--p:0.99s" d="M200 250h-10"/><path class="pin" style="--p:1.8900000000000001s" d="M320 250h10"/></g>
+          <rect x="222" y="182" width="76" height="76" rx="12" fill="#2a32a8" class="core"/>
+          <g clip-path="url(#coreClip)"><rect class="sweep" x="150" y="182" width="50" height="76" fill="url(#sweep)"/></g>
+          <text x="260" y="231" text-anchor="middle" font-family="Sora, sans-serif" font-weight="800" font-size="28" fill="#fff">AM</text>
+        </g>
       </svg>
     </div>
   </div>
@@ -491,6 +558,22 @@ footer{border-top:1px solid var(--line);background:var(--bg-3)}
 (function(){
   var yr=document.getElementById('yr'); if(yr) yr.textContent=new Date().getFullYear();
 
+  // Hero: parallax con el mouse y pausa si se prefiere menos movimiento
+  var art=document.getElementById('heroArt'), hsvg=document.getElementById('heroSvg');
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce && hsvg && hsvg.pauseAnimations){ hsvg.pauseAnimations(); }
+  if(art && !reduce && window.matchMedia('(pointer:fine)').matches){
+    var back=art.querySelector('.layer-back'), nodes=art.querySelector('.layer-nodes'), chip=art.querySelector('.layer-chip');
+    var hero=document.querySelector('.hero');
+    hero.addEventListener('pointermove',function(e){
+      var r=art.getBoundingClientRect(), x=(e.clientX-(r.left+r.width/2))/r.width, y=(e.clientY-(r.top+r.height/2))/r.height;
+      x=Math.max(-1,Math.min(1,x)); y=Math.max(-1,Math.min(1,y));
+      back.style.transform='translate('+(-x*6)+'px,'+(-y*6)+'px)';
+      nodes.style.transform='translate('+(x*12)+'px,'+(y*12)+'px)';
+      chip.style.transform='translate('+(x*4)+'px,'+(y*4)+'px)';
+    });
+    hero.addEventListener('pointerleave',function(){ back.style.transform=nodes.style.transform=chip.style.transform=''; });
+  }
   // Menú móvil
   var btn=document.getElementById('menuBtn'), nav=document.getElementById('mnav');
   btn.addEventListener('click',function(){
