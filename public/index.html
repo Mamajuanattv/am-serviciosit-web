@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>AM Servicios IT</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:image" content="img/am-logo-stacked.png">
 <meta name="description" content="Soporte técnico, infraestructura, ciberseguridad y desarrollo SAP Business One para pymes y empresas en Santiago, Chile.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,8 +48,11 @@ p{margin:0}
 .hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(6,11,22,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 .hdr .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-block:12px}
 .logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--fg)}
-.logo b{font-family:var(--f-display);font-weight:800;font-size:17px;letter-spacing:.04em;display:block;line-height:1.1}
-.logo small{display:block;font-size:10.5px;letter-spacing:.24em;color:var(--dim);text-transform:uppercase;margin-top:4px}
+.logo-chip{width:44px;height:auto;flex-shrink:0;filter:drop-shadow(0 0 10px rgba(91,106,244,.45))}
+.logo-text{display:flex;flex-direction:column;min-width:0}
+.logo-name{display:block;width:190px;height:auto}
+.logo small{display:block;font-size:9.5px;letter-spacing:.24em;color:var(--dim);text-transform:uppercase;margin-top:5px;white-space:nowrap}
+@media (max-width:400px){.logo-name{width:150px}.logo small{font-size:8px;letter-spacing:.16em}}
 .nav{display:flex;gap:24px;font-size:14px}
 .nav a{color:#c4d2e8;text-decoration:none}
 .nav a:hover{color:#fff}
@@ -170,8 +176,7 @@ textarea{resize:vertical;min-height:120px}
 footer{border-top:1px solid var(--line);background:var(--bg-3)}
 .fcols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:32px;padding-block:60px 36px}
 .fbrand{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
-.fbrand b{font:800 18px var(--f-display);letter-spacing:.04em}
-.fbrand span{font-size:13px;color:var(--dim)}
+
 .fcol{display:flex;flex-direction:column;gap:10px;font-size:14px}
 .fcol h4{font:600 15px var(--f-display);color:#fff;margin:0 0 4px}
 .fcol a,.fcol span{color:var(--muted);text-decoration:none;word-break:break-word}
@@ -210,8 +215,8 @@ footer{border-top:1px solid var(--line);background:var(--bg-3)}
 <header class="hdr">
   <div class="wrap">
     <a class="logo" href="#inicio" aria-label="AM Servicios IT, inicio">
-      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="9" y="9" width="22" height="22" rx="5" fill="#1763d6"/><rect x="14" y="14" width="12" height="12" rx="2" stroke="#cfe0ff" stroke-width="1.6"/><path d="M14 4v5M20 4v5M26 4v5M14 31v5M20 31v5M26 31v5M4 14h5M4 20h5M4 26h5M31 14h5M31 20h5M31 26h5" stroke="#4f93f5" stroke-width="1.8" stroke-linecap="round"/></svg>
-      <span><b>AM SERVICIOS IT</b><small>Soporte e Ingeniería de Sistemas</small></span>
+      <img class="logo-chip" src="img/am-chip.png" width="142" height="127" alt="">
+      <span class="logo-text"><img class="logo-name" src="img/am-name-dark.png" width="398" height="37" alt="AM Servicios IT"><small>Soporte e Ingeniería de Sistemas</small></span>
     </a>
     <nav class="nav" aria-label="Principal">
       <a href="#servicios">Servicios</a><a href="#experiencia">Experiencia</a><a href="#sap">SAP</a><a href="#porque">Por qué nosotros</a><a href="#como">Cómo trabajamos</a><a href="#contacto">Contacto</a>
@@ -468,8 +473,7 @@ footer{border-top:1px solid var(--line);background:var(--bg-3)}
   <div class="wrap">
     <div class="fcols">
       <div class="fbrand">
-        <svg width="52" height="52" viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="9" y="9" width="22" height="22" rx="5" fill="#1763d6"/><rect x="14" y="14" width="12" height="12" rx="2" stroke="#cfe0ff" stroke-width="1.6"/><path d="M14 4v5M20 4v5M26 4v5M14 31v5M20 31v5M26 31v5M4 14h5M4 20h5M4 26h5M31 14h5M31 20h5M31 26h5" stroke="#4f93f5" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <b>AM SERVICIOS IT</b><span>Soporte e Ingeniería de Sistemas</span>
+        <img src="img/am-logo-stacked-dark.png" width="398" height="197" alt="AM Servicios IT · Soporte e Ingeniería de Sistemas" style="width:220px;height:auto">
       </div>
       <div class="fcol"><h4>Servicios</h4><a href="#servicios">Soporte técnico</a><a href="#servicios">Ciberseguridad</a><a href="#servicios">Infraestructura y nube</a><a href="#sap">SAP Business One</a></div>
       <div class="fcol"><h4>Empresa</h4><a href="#experiencia">Experiencia</a><a href="#porque">Por qué nosotros</a><a href="#como">Cómo trabajamos</a></div>
